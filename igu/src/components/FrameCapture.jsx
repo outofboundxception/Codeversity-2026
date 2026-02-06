@@ -6,25 +6,26 @@ const FrameCapture = ({ onPrediction }) => {
   useEffect(() => {
     const interval = setInterval(async () => {
       const video = document.getElementById("video");
-      if (!video) return;
+      if (!video || !video.videoWidth) return;
 
       const canvas = document.createElement("canvas");
-      canvas.width = 224;
-      canvas.height = 224;
+      canvas.width = 640;
+      canvas.height = 480;
 
       const ctx = canvas.getContext("2d");
-      ctx.drawImage(video, 0, 0, 224, 224);
+      ctx.drawImage(video, 0, 0, 640, 480);
 
       const image = canvas.toDataURL("image/jpeg");
 
       try {
         const result = await predictGesture(image);
-        if (result.confidence > 0.7) {
+        
+        if (result && result.confidence > 0.5) {
           onPrediction(result);
           speak(result.gesture);
         }
       } catch (err) {
-        console.error("Prediction failed");
+        console.error("Prediction failed:", err);
       }
     }, 500); // 2 FPS
 
