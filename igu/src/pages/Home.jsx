@@ -9,21 +9,26 @@ const Home = () => {
   const [confidence, setConfidence] = useState(0);
 
   return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
-      <h1>IGU – ISL Gesture Recognition</h1>
+  <div className="app-container">
+    <h1 className="app-title">
+      IGU – ISL Gesture Recognition
+    </h1>
 
-      <Camera />
+    <Camera />
 
-      <FrameCapture
-        onPrediction={(data) => {
-          setGesture(data.gesture);
-          setConfidence(data.confidence);
-        }}
-      />
+    <FrameCapture
+      onPrediction={(data) => {
+        setGesture(data.gesture);
+        setConfidence(data.confidence);
+      }}
+    />
 
-      <GestureDisplay gesture={gesture} confidence={confidence} />
-    </div>
-  );
+    <GestureDisplay
+      gesture={gesture}
+      confidence={confidence}
+    />
+  </div>
+);
 };
 
 export default Home;

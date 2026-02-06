@@ -20,18 +20,17 @@ const Camera = () => {
   }, []);
 
   return (
-    <div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        width="400"
-        style={{ borderRadius: "10px", border: "2px solid black" }}
-        id="video"
-      />
-    </div>
-  );
+  <div className="camera-box">
+    {error && <p className="error-text">{error}</p>}
+    <video
+      ref={videoRef}
+      autoPlay
+      playsInline
+      id="video"
+    />
+  </div>
+);
+
 };
 
 export default Camera;
