@@ -91,3 +91,47 @@ video {
   color: #f87171;
   margin-bottom: 12px;
 }
+
+/* Start / Stop Buttons */
+.start-btn {
+  margin-top: 20px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #22c55e;
+  color: #022c22;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.start-btn:hover {
+  background: #16a34a;
+}
+
+.stop-btn {
+  margin-top: 20px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.stop-btn:hover {
+  background: #dc2626;
+}
+
+/* Recorded sentence */
+.recorded-text {
+  margin-top: 12px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #e5e7eb;
+  word-wrap: break-word;
+}

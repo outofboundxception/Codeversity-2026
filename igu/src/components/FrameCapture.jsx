@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { predictGesture } from "../services/api";
 import speak from "../utils/speak";
 
 const FrameCapture = ({ onPrediction }) => {
+  const lastGestureRef = useRef("");
+
   useEffect(() => {
     const interval = setInterval(async () => {
       const video = document.getElementById("video");
@@ -19,8 +21,13 @@ const FrameCapture = ({ onPrediction }) => {
 
       try {
         const result = await predictGesture(image);
-        
-        if (result && result.confidence > 0.5) {
+
+        if (
+          result &&
+          result.confidence > 0.6 &&
+          result.gesture !== lastGestureRef.current
+        ) {
+          lastGestureRef.current = result.gesture;
           onPrediction(result);
           speak(result.gesture);
         }
