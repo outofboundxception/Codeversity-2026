@@ -8,17 +8,16 @@ import { tti } from "../utils/tti";
 const Home = () => {
   const [mode, setMode] = useState("gesture-to-speech");
 
-  // ---------- Gesture → Speech states ----------
+  // Gesture → Speech
   const [isRecording, setIsRecording] = useState(false);
   const [gesture, setGesture] = useState("");
   const [confidence, setConfidence] = useState(0);
   const [recordedWords, setRecordedWords] = useState([]);
 
-  // ---------- Speech → Text states ----------
+  // Speech → Text
   const [isListening, setIsListening] = useState(false);
   const [speechText, setSpeechText] = useState("");
 
-  // ---------- Gesture → Speech logic ----------
   const handlePrediction = (data) => {
     setGesture(data.gesture);
     setConfidence(data.confidence);
@@ -29,116 +28,112 @@ const Home = () => {
     });
   };
 
-  // ---------- Speech → Text logic ----------
   const handleSpeechInput = (text) => {
-    setSpeechText(tti(text)); // ISL-friendly text
+    setSpeechText(tti(text));
     setIsListening(false);
   };
 
   return (
-    <div className="app-container">
-      <h1 className="app-title">IGU – ISL Translator</h1>
-
-      {/* ===== MODE TOGGLE ===== */}
-      <div className="mode-toggle">
+    <div className="cv-root">
+      {/* ===== MODE BAR ===== */}
+      <div className="top-bar">
         <button
           className={mode === "gesture-to-speech" ? "active" : ""}
-          onClick={() => {
-            setMode("gesture-to-speech");
-            setIsListening(false);
-          }}
+          onClick={() => setMode("gesture-to-speech")}
         >
-          ✋ Gesture → 🔊 Speech
+          Gesture → Speech
         </button>
 
         <button
           className={mode === "speech-to-text" ? "active" : ""}
-          onClick={() => {
-            setMode("speech-to-text");
-            setSpeechText("");
-            setIsRecording(false);
-          }}
+          onClick={() => setMode("speech-to-text")}
         >
-          🎤 Speech → 📝 Text
+          Speech → Text
         </button>
       </div>
 
-      {/* ===== GESTURE → SPEECH MODE ===== */}
+      {/* ===== CAMERA VIEW ===== */}
       {mode === "gesture-to-speech" && (
-        <>
+        <div className="camera-stage">
           <Camera />
 
-          {!isRecording ? (
-            <button
-              className="start-btn"
-              onClick={() => {
-                setRecordedWords([]);
-                setGesture("");
-                setConfidence(0);
-                setIsRecording(true);
-              }}
-            >
-              ▶ Start Recording
-            </button>
-          ) : (
-            <button
-              className="stop-btn"
-              onClick={() => setIsRecording(false)}
-            >
-              ⏹ Stop Recording
-            </button>
-          )}
-
+          {/* Overlay like OpenCV */}
+          <div className="overlay">
+  <div className="overlay-bar">
+  <span className="overlay-text">
+    {gesture
+      ? `${gesture} (${confidence.toFixed(2)})`
+      : "—"}
+  </span>
+</div>
+</div>
           {isRecording && (
             <FrameCapture onPrediction={handlePrediction} />
           )}
-
-          <GestureDisplay
-            gesture={gesture}
-            confidence={confidence}
-            recordedWords={recordedWords}
-            isRecording={isRecording}
-          />
-        </>
+        </div>
       )}
 
-      {/* ===== SPEECH → TEXT MODE ===== */}
+      {/* ===== CONTROLS ===== */}
+      <div className="controls">
+        {mode === "gesture-to-speech" && (
+          <>
+            {!isRecording ? (
+              <button
+                className="control-btn start"
+                onClick={() => {
+                  setGesture("");
+                  setConfidence(0);
+                  setRecordedWords([]);
+                  setIsRecording(true);
+                }}
+              >
+                ▶ Start
+              </button>
+            ) : (
+              <button
+                className="control-btn stop"
+                onClick={() => setIsRecording(false)}
+              >
+                ⏹ Stop
+              </button>
+            )}
+          </>
+        )}
+
+        {mode === "speech-to-text" && (
+          <>
+            <SpeechInput
+              isListening={isListening}
+              onText={handleSpeechInput}
+            />
+
+            {!isListening ? (
+              <button
+                className="control-btn start"
+                onClick={() => {
+                  setSpeechText("");
+                  setIsListening(true);
+                }}
+              >
+                🎤 Start
+              </button>
+            ) : (
+              <button
+                className="control-btn stop"
+                onClick={() => setIsListening(false)}
+              >
+                ⏹ Stop
+              </button>
+            )}
+          </>
+        )}
+      </div>
+
+      {/* ===== TEXT OUTPUT ===== */}
       {mode === "speech-to-text" && (
-        <>
-          <SpeechInput
-            isListening={isListening}
-            onText={handleSpeechInput}
-          />
-
-          {!isListening ? (
-            <button
-              className="start-btn"
-              onClick={() => {
-                setSpeechText("");
-                setIsListening(true);
-              }}
-            >
-              🎤 Start Speaking
-            </button>
-          ) : (
-            <button
-              className="stop-btn"
-              onClick={() => setIsListening(false)}
-            >
-              ⏹ Stop Speaking
-            </button>
-          )}
-
-          {/* ===== OUTPUT BOX ===== */}
-          <div className="gesture-box">
-            <p className="gesture-text">
-              {speechText || "Your ISL-formatted text will appear here..."}
-            </p>
-            <p className="confidence-text">
-              ISL-formatted text
-            </p>
-          </div>
-        </>
+        <div className="text-output">
+          {speechText || "Waiting for speech input..."}
+        </div>
       )}
     </div>
   );
