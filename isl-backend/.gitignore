@@ -1,0 +1,77 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments - NEVER COMMIT!
+venv/
+env/
+ENV/
+.venv/
+venv.bak/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+
+# Model files (if large)
+*.h5
+*.keras
+*.pt
+*.pth
+*.onnx
+
+# Data files (if large)
+data/raw/
+data/processed/
+datasets/
+*.csv
+*.zip
+*.tar.gz
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
