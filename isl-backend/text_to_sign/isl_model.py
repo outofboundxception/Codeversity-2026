@@ -25,11 +25,14 @@ def generate_isl_sequence(text: str):
     sequence = []
 
     for token in tokens:
-
-        for char in token:
-            if char.isalpha():
-                sequence.append(f"{ASSET_BASE}/alphabets/{char}.jpg")
-            elif char.isdigit():
-                sequence.append(f"{ASSET_BASE}/numbers/{char}.jpg")
+        word_path = f"{ASSET_BASE}/words/{token}.jpg"
+        if os.path.exists(word_path):
+            sequence.append(word_path)
+        else:
+            for char in token:
+                if char.isalpha():
+                    sequence.append(f"{ASSET_BASE}/alphabets/{char}.jpg")
+                elif char.isdigit():
+                    sequence.append(f"{ASSET_BASE}/numbers/{char}.jpg")
 
     return sequence

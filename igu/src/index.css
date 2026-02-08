@@ -161,6 +161,11 @@ video {
   color: #38bdf8;
 }
 
+.text-output + .gesture-box {
+  margin-top: 20px;
+}
+
+
 /* =========================
    RESPONSIVE
 ========================= */

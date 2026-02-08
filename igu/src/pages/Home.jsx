@@ -4,6 +4,8 @@ import GestureDisplay from "../components/GestureDisplay";
 import Camera from "../components/camera";
 import SpeechInput from "../components/SpeechInput";
 import { tti } from "../utils/tti";
+import { predictISL } from "../services/api";
+import SignAnimation from "../components/SignAnimation";
 
 const Home = () => {
   const [mode, setMode] = useState("gesture-to-speech");
@@ -17,6 +19,8 @@ const Home = () => {
   // Speech → Text
   const [isListening, setIsListening] = useState(false);
   const [speechText, setSpeechText] = useState("");
+  const [islImages, setIslImages] = useState([]);
+
 
   const handlePrediction = (data) => {
     setGesture(data.gesture);
@@ -28,10 +32,20 @@ const Home = () => {
     });
   };
 
-  const handleSpeechInput = (text) => {
-    setSpeechText(tti(text));
+
+  const handleSpeechInput = async (text) => {
+    const islText = tti(text);
+    setSpeechText(islText);
     setIsListening(false);
+
+    try {
+      const res = await predictISL(islText);
+      setIslImages(res.images || []);
+    } catch (err) {
+      console.error("ISL prediction failed", err);
+    }
   };
+
 
   return (
     <div className="cv-root">
@@ -131,9 +145,13 @@ const Home = () => {
 
       {/* ===== TEXT OUTPUT ===== */}
       {mode === "speech-to-text" && (
-        <div className="text-output">
-          {speechText || "Waiting for speech input..."}
-        </div>
+        <>
+          <div className="text-output">
+            {speechText || "Waiting for speech input..."}
+          </div>
+
+          <SignAnimation images={islImages} speed={600} />
+        </>
       )}
     </div>
   );
