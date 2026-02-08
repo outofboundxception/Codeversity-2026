@@ -21,7 +21,7 @@ export const predictGesture = async (image) => {
 };
 
 export const predictISL = async (text) => {
-  const res = await fetch("http://localhost:8000/predict", {
+  const res = await fetch("http://localhost:8001/predict", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

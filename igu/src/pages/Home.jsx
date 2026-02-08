@@ -62,7 +62,7 @@ const Home = () => {
           className={mode === "speech-to-text" ? "active" : ""}
           onClick={() => setMode("speech-to-text")}
         >
-          Speech → Text
+          Speech → Gesture
         </button>
       </div>
 

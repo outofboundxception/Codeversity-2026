@@ -26,7 +26,7 @@ const SignAnimation = ({ images, speed = 600 }) => {
   return (
     <div className="gesture-box">
       <img
-        src={`http://localhost:8000${images[currentIndex]}`}
+        src={`http://localhost:8001${images[currentIndex]}`}
         alt="ISL sign"
         style={{
           width: "260px",
