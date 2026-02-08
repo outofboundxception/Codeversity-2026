@@ -18,54 +18,28 @@ body {
 }
 
 /* =========================
-   ROOT LAYOUT
+   ROOT (cv-root)
 ========================= */
-#root {
+.cv-root {
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 24px; /* ✅ prevents edge clipping on small screens */
-}
-
-/* =========================
-   MAIN CONTAINER
-========================= */
-.app-container {
   width: 100%;
-  max-width: 900px;
-  background: rgba(2, 6, 23, 0.94);
-  border-radius: 22px;
-  padding: 42px 40px;
-  box-shadow:
-    0 40px 120px rgba(0, 0, 0, 0.75),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-  text-align: center;
-}
-
-/* =========================
-   TITLE
-========================= */
-.app-title {
-  font-size: 2.4rem;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  margin-bottom: 28px;
-}
-
-/* =========================
-   MODE TOGGLE
-========================= */
-.mode-toggle {
   display: flex;
-  justify-content: center;
-  gap: 14px;
-  margin-bottom: 32px;
-  flex-wrap: wrap; /* ✅ mobile-safe */
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
 }
 
-.mode-toggle button {
-  padding: 12px 20px;
+/* =========================
+   TOP MODE BAR
+========================= */
+.top-bar {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.top-bar button {
+  padding: 10px 20px;
   font-size: 1rem;
   border-radius: 12px;
   border: 1px solid #1e293b;
@@ -75,19 +49,20 @@ body {
   transition: all 0.25s ease;
 }
 
-.mode-toggle button.active {
+.top-bar button.active {
   background: linear-gradient(135deg, #2563eb, #3b82f6);
-  color: #ffffff;
+  color: white;
   border-color: transparent;
   box-shadow: 0 8px 30px rgba(59, 130, 246, 0.35);
 }
 
 /* =========================
-   CAMERA BOX
+   CAMERA STAGE
 ========================= */
-.camera-box {
-  margin: 30px auto;
-  padding: 20px;
+.camera-stage {
+  position: relative; /* REQUIRED for overlay */
+  margin: 20px auto;
+  padding: 18px;
   border-radius: 22px;
   background: linear-gradient(
     180deg,
@@ -95,15 +70,14 @@ body {
     rgba(2, 6, 23, 0.7)
   );
   border: 1px solid #1e293b;
-  width: fit-content;
   box-shadow:
     0 25px 60px rgba(0, 0, 0, 0.6),
     inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
-/* 🎥 CAMERA */
+/* 🎥 VIDEO */
 video {
-  width: 520px;
+  width: 720px;
   max-width: 100%;
   border-radius: 18px;
   border: 2px solid #334155;
@@ -111,101 +85,96 @@ video {
 }
 
 /* =========================
-   ACTION BUTTONS
+   OPENCV-STYLE OVERLAY
 ========================= */
-.start-btn,
-.stop-btn {
-  margin-top: 28px;
-  padding: 14px 36px;
-  font-size: 1.05rem;
+.overlay {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 5;
+}
+
+.overlay-bar {
+  min-width: 200px;        /* controls red blank space */
+  height: 48px;
+  background: rgba(255, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 4px;
+}
+
+.overlay-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+/* =========================
+   CONTROLS
+========================= */
+.controls {
+  margin-top: 18px;
+  display: flex;
+  gap: 14px;
+}
+
+.control-btn {
+  padding: 12px 30px;
+  font-size: 1rem;
   font-weight: 700;
   border-radius: 999px;
   border: none;
   cursor: pointer;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
-.start-btn {
+.control-btn.start {
   background: linear-gradient(135deg, #22c55e, #4ade80);
   color: #022c22;
   box-shadow: 0 10px 30px rgba(34, 197, 94, 0.35);
 }
 
-.stop-btn {
+.control-btn.stop {
   background: linear-gradient(135deg, #ef4444, #f87171);
   color: white;
   box-shadow: 0 10px 30px rgba(239, 68, 68, 0.35);
 }
 
-.start-btn:hover,
-.stop-btn:hover {
+.control-btn:hover {
   transform: translateY(-2px);
 }
 
 /* =========================
-   OUTPUT BOX (GESTURE + SPEECH)
+   SPEECH → TEXT OUTPUT
 ========================= */
-.gesture-box {
-  margin-top: 36px;
-  padding: 28px 26px;
-  border-radius: 18px;
+.text-output {
+  margin-top: 24px;
+  padding: 18px 20px;
+  width: 720px;
+  max-width: 100%;
+  border-radius: 16px;
   background: rgba(2, 6, 23, 0.95);
   border: 1px solid #1e293b;
-  min-height: 110px; /* ✅ stable layout */
-}
-
-/* MAIN OUTPUT TEXT */
-.gesture-text {
-  font-size: 1.8rem;
-  font-weight: 800;
+  font-size: 1.2rem;
   color: #38bdf8;
-  letter-spacing: 0.8px;
-  word-wrap: break-word;
-}
-
-/* SUBTEXT */
-.confidence-text {
-  margin-top: 12px;
-  font-size: 0.95rem;
-  color: #94a3b8;
 }
 
 /* =========================
-   STATUS / HELPER TEXT
+   RESPONSIVE
 ========================= */
-.status-text {
-  margin-top: 14px;
-  font-size: 0.95rem;
-  color: #cbd5f5;
-}
-
-/* =========================
-   ERROR
-========================= */
-.error-text {
-  color: #f87171;
-  margin-bottom: 12px;
-}
-
-/* =========================
-   RESPONSIVE FIXES
-========================= */
-@media (max-width: 640px) {
-  .app-container {
-    padding: 30px 22px;
-  }
-
-  .app-title {
-    font-size: 2rem;
-  }
-
-  .gesture-text {
-    font-size: 1.4rem;
-  }
-
+@media (max-width: 768px) {
   video {
     width: 100%;
+  }
+
+  .overlay-bar {
+    min-width: 160px;
+    height: 42px;
+  }
+
+  .overlay-text {
+    font-size: 18px;
   }
 }
