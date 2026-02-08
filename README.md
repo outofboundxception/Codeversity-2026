@@ -1,6 +1,6 @@
-# ISL Connect
+# ISL Translator
 
-ISL Connect is a web-based AI application designed to enable real-time, two-way communication between Indian Sign Language (ISL) users and the general population. The system bridges the communication gap by translating ISL hand gestures into text and speech, and converting spoken or textual input into sign language representations.
+ISL Translator is a web-based AI application designed to enable real-time, two-way communication between Indian Sign Language (ISL) users and the general population. The system bridges the communication gap by translating ISL hand gestures into text and speech, and converting spoken or textual input into sign language representations.
 
 The project focuses on accessibility, inclusivity, and affordability by using open-source tools and standard hardware such as webcams, making it suitable for real-world deployment on low-cost devices.
 
